@@ -4,21 +4,30 @@ import "../App.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const APIUrl = "https://vrika-ai.onrender.com/api/v1";
-
 export default function SignUp() {
-
+  const [isChecked, setIsChecked] = useState(false);
+  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const sendSignUpData = async () => {
-
-    // console.log(Name, Email, Phone, Password, imageData);
-    const singUpData = await fetch(`${APIUrl}/SignUp`, {
+    console.log("api triggered F")
+    if (!isChecked) {
+      toast.error("Please agree to the terms and conditions.");
+      return;
+    }
+    console.log(name, email, password);
+    const singUpData = await fetch(import.meta.env.VITE_SIGNUP_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-
+        name,
+        userName,
+        email,
+        password,
       }),
     });
     const receivedData = await singUpData.json();
@@ -40,7 +49,7 @@ export default function SignUp() {
       <ToastContainer />
       <div className="bg-gray-950 lg:h-[80%] lg:w-full flex items-center justify-center border-0 signUpDiv">
         <div className="lg:w-[60vw] mainDivSignUp2 md:flex items-center justify-center border-0">
-          <div className="bg-gray-900 lg:w-[80%] mainDivSignUp h-full shadow-lg rounded p-10">
+          <div className="bg-gray-900 lg:w-[80%] mainDivSignUp h-full shadow-lg rounded py-6 px-10">
             <p
               tabIndex={0}
               className="focus:outline-none account tracking-widest lg:text-2xl font-bold leading-6 text-gray-300"
@@ -75,8 +84,27 @@ export default function SignUp() {
                     type="text"
                     className="bg-transparent border rounded text-xs font-medium leading-none placeholder-gray-400 text-gray-300 py-3 w-full pl-3 mt-2"
                     placeholder="your name"
+                    onChange={(e) => { setName(e.target.value) }}
                   />
                 </div>
+
+                <div className="mt-2 w-full">
+                  <label
+                    htmlFor="UserName"
+                    className="text-sm font-medium leading-none text-gray-300"
+                  >
+                    UserName
+                  </label>
+                  <input
+                    id="UserName"
+                    aria-labelledby="UserName"
+                    type="text"
+                    className="bg-transparent border rounded text-xs font-medium leading-none placeholder-gray-400 text-gray-300 py-3 w-full pl-3 mt-2"
+                    placeholder="Your User Name"
+                    onChange={(e) => { setUserName(e.target.value) }}
+                  />
+                </div>
+
                 <div className="mt-4 w-full">
                   <label
                     htmlFor="email"
@@ -90,6 +118,7 @@ export default function SignUp() {
                     type="email"
                     className="bg-transparent border rounded text-xs font-medium leading-none placeholder-gray-400 text-gray-300 py-3 w-full pl-3 mt-2"
                     placeholder="e.g: abc@gmail.com "
+                    onChange={(e) => { setEmail(e.target.value) }}
                   />
                 </div>
                 <div className="mt-4 w-full">
@@ -105,6 +134,7 @@ export default function SignUp() {
                       type={showpass ? "text" : "password"}
                       className="bg-transparent border rounded text-xs font-medium leading-none text-gray-300 py-4 w-full pl-3 mt-2"
                       placeholder="unique password must be 8 digit"
+                      onChange={(e) => { setPassword(e.target.value) }}
                     />
                     <div
                       onClick={() => setShowPass(!showpass)}
@@ -130,8 +160,9 @@ export default function SignUp() {
               </div>
             </div>
             <div className="mt-4 flex items-center justify-start">
-              <input type="checkbox" name="TC" id="TC" className="" />
-              <span className="ml-2 text-xs text-gray-300">
+              <input type="checkbox" name="TC" id="TC" className="" checked={isChecked}
+                onChange={() => setIsChecked(!isChecked)} />
+              <span className="ml-2 text-[8px] text-gray-300">
                 I agree to all the Terms of Services and Conditions
               </span>
               <br />
@@ -141,8 +172,8 @@ export default function SignUp() {
                 role="button"
                 className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-900 border-0 rounded hover:bg-indigo-900 py-4 w-full"
                 onClick={sendSignUpData}
+                disabled={!isChecked}
               >
-                {/* <Link to="/signIn">Create my account</Link> */}
                 Create my account
               </button>
             </div>
