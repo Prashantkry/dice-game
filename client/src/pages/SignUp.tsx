@@ -12,12 +12,12 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
 
   const sendSignUpData = async () => {
-    console.log("api triggered F")
+    // console.log("api triggered F")
     if (!isChecked) {
       toast.error("Please agree to the terms and conditions.");
       return;
     }
-    console.log(name, email, password);
+    // console.log(name, email, password);
     const singUpData = await fetch(import.meta.env.VITE_SIGNUP_URL, {
       method: "POST",
       headers: {
@@ -30,16 +30,16 @@ export default function SignUp() {
         password,
       }),
     });
+    // console.log("singUpData -> ", singUpData)
     const receivedData = await singUpData.json();
-    console.log(receivedData);
+    // console.log(receivedData);
     if (receivedData.message === "User created successfully") {
-      toast.success("Signup successful!");
-      window.location.href = "/signIn";
+      toast.success("Sign Up successful!");
+      window.location.href = "/";
     } else if (receivedData.message === "UserAlready") {
       toast.error("User already exists. Please sign in");
-      window.location.href = "/signIn";
     } else {
-      toast.error("Error: Signup failed!");
+      toast.error("Error: Sign Up failed!");
     }
   };
   const [showpass, setShowPass] = useState(false);
