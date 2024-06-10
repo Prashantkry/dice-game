@@ -8,6 +8,7 @@ export const logIn = async (req: express.Request, res: express.Response) => {
   // console.log('login')
   try {
     const { email, password } = req.body;
+    // console.log("email -> ", email, "password -> ", password)
     if (!email || !password) {
       return res.sendStatus(500);
     }
