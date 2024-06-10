@@ -2,11 +2,43 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css";
 import { ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setEmailData, setName, setSignedIn, setTotalPoints } from "../redux/UserData";
 
 export default function SignInPage() {
     const navigate = useNavigate();
-
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [showPass, setShowPass] = useState(false);
+    
+    const dispatch = useDispatch()
+
+
+    // api for sign in
+    const signIn = async () => {
+        const sentSignInData = await fetch(import.meta.env.VITE_SIGNIN_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        })
+        // console.log("sentSignInData -> ", sentSignInData)
+        const receivedData = await sentSignInData.json()
+        // console.log("receivedData -> ", receivedData)
+        if (receivedData.message === "Sign In Successful") {
+            // localStorage.setItem("user", JSON.stringify(receivedData.userOtherData))
+            dispatch(setSignedIn(true))
+            dispatch(setEmailData(receivedData.userOtherData.email))
+            dispatch(setName(receivedData.userOtherData.name))
+            dispatch(setTotalPoints(receivedData.userOtherData.TotalPoints))
+            navigate("/")
+        }
+    }
+
     return (
         <>
             <ToastContainer />
@@ -46,6 +78,7 @@ export default function SignInPage() {
                                 type="email"
                                 className="bg-gray-200 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2"
                                 placeholder="e.g: abc@gmail.com "
+                                onChange={(e) => { setEmail(e.target.value) }}
                             />
                         </div>
                         <div className="mt-6 w-full">
@@ -61,6 +94,7 @@ export default function SignInPage() {
                                     type={showPass ? "text" : "password"}
                                     className="bg-gray-200 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2"
                                     placeholder="Your Password"
+                                    onChange={(e) => { setPassword(e.target.value) }}
                                 />
                                 <div
                                     onClick={() => setShowPass(!showPass)}
@@ -106,6 +140,7 @@ export default function SignInPage() {
                             <button
                                 role="button"
                                 className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-900 border-0 rounded hover:bg-indigo-950 py-4 w-full"
+                                onClick={signIn}
                             >
                                 SignIn
                             </button>

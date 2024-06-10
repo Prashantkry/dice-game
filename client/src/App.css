@@ -20,6 +20,15 @@
 @tailwind components;
 @tailwind utilities;
 
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .svgBlend {
   /* mix-blend-mode: overlay; */
   margin-top: 15rem;
@@ -43,6 +52,66 @@
     stroke-dasharray: 1000, 0;
   }
 }
+
+/* model of won UI */
+.wonUi {
+  animation: fadeInAndScaleUp 1s forwards 1s;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes fadeInAndScaleUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.falling-flowers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.flower {
+  position: absolute;
+  top: -10%;
+  left: calc(25% * var(--i));
+  font-size: 24px;
+  animation: fall 3s linear infinite;
+  transform: translateY(100vh);
+}
+
+.flower:nth-child(1) {
+  --i: 1;
+}
+.flower:nth-child(2) {
+  --i: 2;
+}
+.flower:nth-child(3) {
+  --i: 3;
+}
+.flower:nth-child(4) {
+  --i: 4;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+/* pop model end */
 
 .svgBlend path {
   stroke: #3516a5;
@@ -88,7 +157,6 @@
     padding-left: 20px;
     padding-right: 20px;
     /* border: 1px solid red; */
-
   }
   .account {
     font-size: 1.3rem;
@@ -169,7 +237,7 @@
   position: absolute;
   width: 100px;
   height: 100px;
-  background: #fff;
+  background: #410792;
   border: 2px solid #000;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -199,7 +267,7 @@
 
 /* Loader */
 .loader {
-  border: 4px solid #f3f3f3;
+  border: 4px solid #7b0fa2;
   border-top: 4px solid #5c18b6;
   border-radius: 50%;
   width: 20px;
@@ -232,6 +300,6 @@
 }
 
 .roll-button.disabled {
-  background-color: #ccc;
+  background-color: #4b0993;
   cursor: not-allowed;
 }

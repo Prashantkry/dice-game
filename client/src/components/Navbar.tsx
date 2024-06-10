@@ -1,11 +1,27 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import './navbar.css'
+import { useDispatch, useSelector } from "react-redux";
+import { setSignedIn } from "../redux/UserData";
 
 
-let loginStatus: boolean;
 const Navbar = () => {
+    const navigate = useNavigate()
+    let loginStatus: boolean = false
     const [showHamburger, setShowHamburger] = useState("slide-left")
+    loginStatus = useSelector(state => state.UserDetails.SignedIn)
+
+    // console.log("loginStatus", loginStatus)
+ 
+
+    const dispatch = useDispatch()
+    const handleLogout = () => {
+        // console.log("logout clicked")
+        dispatch(setSignedIn(false))
+        loginStatus = false
+        navigate("/")
+    }
+
     const handleHamBurger = () => {
         if (showHamburger === "slide-right") {
             setShowHamburger("slide-left")
@@ -14,7 +30,6 @@ const Navbar = () => {
             setShowHamburger("slide-right")
         }
     }
-
     return (
         <>
             <div className="flex flex-wrap place-items-center xl:static md:static sticky top-0 z-20">
@@ -57,6 +72,7 @@ const Navbar = () => {
                                     {loginStatus ? (
                                         <button
                                             className="text-white"
+                                            onClick={handleLogout}
                                         >
                                             Log Out
                                         </button>
