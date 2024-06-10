@@ -17,7 +17,7 @@ export const logIn = async (req: express.Request, res: express.Response) => {
     // console.log("user after log in -> ", user)
 
     if (!user) {
-      return res.sendStatus(400);
+      return res.status(400).json("User not found");
     }
 
     const expectedHash = authentication(user.authentication.salt, password);
