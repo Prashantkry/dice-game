@@ -101,7 +101,8 @@ const Game = () => {
         if (betAmount === undefined || betOption === undefined) {
             alert("Data Missing")
         } else {
-            const response = await fetch('http://localhost:5000/api/dice', {
+            // const response = await fetch('http://localhost:5000/api/dice', {
+            const response = await fetch('dice-game-bq7z-6gi1aalt8-prashantkrys-projects.vercel.app/api/dice', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
