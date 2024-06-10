@@ -9,13 +9,8 @@ import mongoose from "mongoose";
 import router from "./routes/index";
 
 
-const result = dotenv.config();
-if (result.error) {
-    console.log("Error in env variable ,aborting");
-    process.exit(500);
-}
+dotenv.config();
 
-import { isInteger } from "./utils";
 import { logger } from "./logger"; // must be after env data
 
 let port: Number;
