@@ -45,7 +45,7 @@ mongoose.connection.on("error", (err) => {
     process.exit(500);
 });
 
-server.listen(port, () => {
+server.listen(PORT, () => {
     logger.info(`HTTP API sever is running at http://localhost:${PORT}/`);
 });
 
