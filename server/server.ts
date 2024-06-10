@@ -33,9 +33,7 @@ app.use(cookieParser())
 
 // creating server 
 const server = http.createServer(app)
-const portEnv = process.env.PORT,
-    portArg = process.argv[2];
-
+const portEnv = process.env.PORT
 if (isInteger(portEnv)) { 
     port = parseInt(portEnv);
 }
