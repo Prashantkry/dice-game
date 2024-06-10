@@ -4,15 +4,19 @@ import "../App.css";
 import { ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setEmailData, setName, setSignedIn, setTotalPoints } from "../redux/UserData";
+import { useCookies } from "react-cookie";
+
 
 export default function SignInPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showPass, setShowPass] = useState(false);
-    
+
+
     const dispatch = useDispatch()
 
+    const [, setCookie] = useCookies(['jwtToken']);
 
     // api for sign in
     const signIn = async () => {
@@ -29,6 +33,7 @@ export default function SignInPage() {
         // console.log("sentSignInData -> ", sentSignInData)
         const receivedData = await sentSignInData.json()
         // console.log("receivedData -> ", receivedData)
+        setCookie("jwtToken", receivedData.jwtToken)
         if (receivedData.message === "Sign In Successful") {
             // localStorage.setItem("user", JSON.stringify(receivedData.userOtherData))
             dispatch(setSignedIn(true))

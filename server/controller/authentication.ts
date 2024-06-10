@@ -1,6 +1,7 @@
 import express from "express";
 import { createUser, getUserByEmail } from "../model/userSchema";
 import { authentication, random } from "../helpers";
+import jwt from "jsonwebtoken"
 
 // ! login user 
 export const logIn = async (req: express.Request, res: express.Response) => {
@@ -24,20 +25,21 @@ export const logIn = async (req: express.Request, res: express.Response) => {
       return res.sendStatus(403);
     }
 
-    const salt = random();
+    // * creating jwt token
+    const jwtToken = jwt.sign({
+      email: email,
+    },
+      process.env.JWT_SECRET,
+      { expiresIn: "20m" }
+    );
+    // console.log(jwtToken);
 
-    // user.authentication.sessionToken = authentication(salt, user._id.toString())
     await user.save();
-
-    res.cookie("PrashantKrCookie", user.authentication.sessionToken, {
-      domain: "localhost",
-      path: "/",
-    });
 
     const userOtherData = await getUserByEmail(email)
     // console.log("userOtherData -> ", userOtherData)
 
-    return res.status(200).json({ userOtherData, message: "Sign In Successful" }).end();
+    return res.status(200).json({ userOtherData, jwtToken, message: "Sign In Successful" }).end();
   } catch (error) {
     console.log(error)
     return res.sendStatus(400)
