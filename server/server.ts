@@ -33,11 +33,8 @@ app.use(cookieParser())
 
 // creating server 
 const server = http.createServer(app)
-const portEnv = process.env.PORT
-if (isInteger(portEnv)) { 
-    port = parseInt(portEnv);
-}
-if (!port) port = 8000; 
+
+const PORT = process.env.PORT || 8000;
 
 // mongo db url
 const mongoUrl = process.env.MONGO_URL;
@@ -49,7 +46,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 server.listen(port, () => {
-    logger.info(`HTTP API sever is running at http://localhost:${port}/`);
+    logger.info(`HTTP API sever is running at http://localhost:${PORT}/`);
 });
 
 app.use('/', router())
