@@ -102,7 +102,7 @@ const Game = () => {
             alert("Data Missing")
         } else {
             // const response = await fetch('http://localhost:5000/api/dice', {
-            const response = await fetch('dice-game-bq7z-6gi1aalt8-prashantkrys-projects.vercel.app/api/dice', {
+            const response = await fetch('https://dice-game-bhdi.onrender.com/api/dice', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

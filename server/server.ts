@@ -19,7 +19,10 @@ const app = express();
 
 // cors  
 app.use(cors({
-    credentials: true
+    origin: "https://dice-game-e58udciol-prashantkrys-projects.vercel.app",
+    // origin: "http://localhost:5173",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
 }))
 
 app.use(compression())
