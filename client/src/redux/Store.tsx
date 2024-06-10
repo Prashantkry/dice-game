@@ -19,4 +19,5 @@ const Store = configureStore({
     reducer: persistedReducer,
 });
 
+export type RootState = ReturnType<typeof Store.getState>
 export default Store;

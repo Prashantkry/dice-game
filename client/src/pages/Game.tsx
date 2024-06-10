@@ -3,20 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { setTotalPoints } from '../redux/UserData';
+import { RootState } from '../redux/Store';
 
 const Game = () => {
     const [dice1, setDice1] = useState(1);
     const [dice2, setDice2] = useState(1);
     const [rolling, setRolling] = useState(false);
-    const [betAmount, setBetAmount] = useState()
-    const [betOption, setBetOption] = useState()
+    const [betAmount, setBetAmount] = useState(0)
+    const [betOption, setBetOption] = useState(100)
     const [message, setMessage] = useState('')
     const [wonUi, setWonUi] = useState<boolean>(false)
 
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
-    const signedStatus = useSelector((state) => state.UserDetails.SignedIn)
+    const signedStatus = useSelector((state: RootState) => state.UserDetails.SignedIn)
 
     useEffect(() => {
         if (!signedStatus) {
@@ -25,14 +26,14 @@ const Game = () => {
         }
     }, [signedStatus, navigate])
 
-    const nameData = useSelector((state) => state.UserDetails.name)
-    const emailData: string = useSelector((state) => state.UserDetails.email)
-    const TotalPointsData = useSelector((state) => state.UserDetails.TotalPoints)
+    const nameData = useSelector((state: RootState) => state.UserDetails.name)
+    const emailData: string = useSelector((state: RootState) => state.UserDetails.email)
+    const TotalPointsData = useSelector((state: RootState) => state.UserDetails.TotalPoints)
 
     // user details start
     const userData: GameInterface = {
         name: nameData,
-        Points: TotalPointsData,
+        Points: +TotalPointsData,
         amountToBet: 100,
         option: ['7 up', '7', '7 down']
     }
