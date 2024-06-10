@@ -3,13 +3,14 @@ import { useState } from "react";
 import './navbar.css'
 import { useDispatch, useSelector } from "react-redux";
 import { setSignedIn } from "../redux/UserData";
+import { RootState } from "../redux/Store";
 
 
 const Navbar = () => {
     const navigate = useNavigate()
     let loginStatus: boolean = false
     const [showHamburger, setShowHamburger] = useState("slide-left")
-    loginStatus = useSelector(state => state.UserDetails.SignedIn)
+    loginStatus = useSelector((state:RootState) => state.UserDetails.SignedIn)
 
     // console.log("loginStatus", loginStatus)
  
