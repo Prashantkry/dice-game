@@ -16,6 +16,8 @@ const Game = () => {
 
     const dispatch = useDispatch()
 
+    // let d1: number, d2: number
+
     const navigate = useNavigate()
     const signedStatus = useSelector((state: RootState) => state.UserDetails.SignedIn)
 
@@ -81,15 +83,18 @@ const Game = () => {
 
 
     // dice code start
-    const rollDice = () => {
+    const rollDice = async () => {
         if (betAmount === undefined || betOption === undefined) {
             alert("Data Missing")
         } else {
             setRolling(true);
             setTimeout(() => {
-                setDice1(Math.floor(Math.random() * 6) + 1);
-                setDice2(Math.floor(Math.random() * 6) + 1);
+                const d1 = Math.floor(Math.random() * 6) + 1;
+                const d2 = Math.floor(Math.random() * 6) + 1;
+                setDice1(d1);
+                setDice2(d2);
                 setRolling(false);
+                diceApi(d1, d2, betAmount, betOption)
             }, 1000);
         }
 
@@ -98,11 +103,12 @@ const Game = () => {
 
     // api for dice handling part start
     const diceApi = async (dice1: number, dice2: number, betAmount: number, betOption: number) => {
+        console.log("dice1 -> ", dice1, "dice2 -> ", dice2, "betAmount -> ", betAmount, "betOption -> ", betOption)
         if (betAmount === undefined || betOption === undefined) {
             alert("Data Missing")
         } else {
             // const response = await fetch('http://localhost:5000/api/dice', {
-            const response = await fetch('https://dice-game-bhdi.onrender.com/api/dice', {
+                const response = await fetch('https://dice-game-bhdi.onrender.com/api/dice', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -120,11 +126,6 @@ const Game = () => {
             if (data.message.toLowerCase().includes("won")) {
                 setWonUi(true)
             }
-            // setTimeout(()=>{
-            // setWonUi(false)
-            // },2000)
-            // console.log(data)
-
             // updating total points in UI
             dispatch(setTotalPoints(data.newPoints))
 
@@ -176,7 +177,7 @@ const Game = () => {
                 </div>
                 <button
                     className={`roll-button ${rolling ? 'disabled' : ''} mt-16`}
-                    onClick={() => { rollDice(); diceApi(dice1, dice2, betAmount, betOption) }}
+                    onClick={() => rollDice()}
                     disabled={rolling}
                 >
                     {rolling ? 'Rolling...' : 'Roll Dice'}
