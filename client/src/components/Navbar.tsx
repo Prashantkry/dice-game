@@ -10,10 +10,10 @@ const Navbar = () => {
     const navigate = useNavigate()
     let loginStatus: boolean = false
     const [showHamburger, setShowHamburger] = useState("slide-left")
-    loginStatus = useSelector((state:RootState) => state.UserDetails.SignedIn)
+    loginStatus = useSelector((state: RootState) => state.UserDetails.SignedIn)
 
     // console.log("loginStatus", loginStatus)
- 
+
 
     const dispatch = useDispatch()
     const handleLogout = () => {
@@ -43,7 +43,6 @@ const Navbar = () => {
                             <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
                                 <li><NavLink to={"/"} className={({ isActive, isPending }) => isPending ? "" : isActive ? "text-indigo-400 border-b-2 border-indigo-600" : ""}>Home</NavLink></li>
                                 <li><NavLink to={"/game"} className={({ isActive, isPending }) => isPending ? "" : isActive ? "text-indigo-400 border-b-2 border-indigo-600" : ""}>Game</NavLink></li>
-                                <li><NavLink to={"/Plans"} className={({ isActive, isPending }) => isPending ? "" : isActive ? "text-indigo-400 border-b-2 border-indigo-600" : ""}>Subscription</NavLink></li>
                                 <li>
                                     {loginStatus ? (
                                         <button
@@ -69,7 +68,6 @@ const Navbar = () => {
                             <ul className="  flex flex-col px-6 mx-auto font-semibold font-heading space-x-12 gap-5 justify-start w-full">
                                 <li className='!m-0'><NavLink to={"/"} className={({ isActive, isPending }) => isPending ? "" : isActive ? "text-indigo-600 border-b-2 border-indigo-600" : ""}>Home</NavLink></li>
                                 <li className='!m-0'><NavLink to={"/game"} className={({ isActive, isPending }) => isPending ? "" : isActive ? "text-indigo-600 border-b-2 border-indigo-600" : ""}>Game</NavLink></li>
-                                <li className='!m-0'><NavLink to={"/Plans"} className={({ isActive, isPending }) => isPending ? "" : isActive ? "text-indigo-600 border-b-2 border-indigo-600" : ""}>Subscription</NavLink></li>
                                 <li className='!m-0'>
                                     {loginStatus ? (
                                         <button
