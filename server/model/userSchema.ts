@@ -4,6 +4,7 @@ const UserSchema = new mongoose.Schema({
   name: String,
   email: String,
   userName: String,
+  TotalPoints: String,
   authentication: {
     password: {
       type: String,
@@ -19,7 +20,6 @@ const UserSchema = new mongoose.Schema({
       select: false,
     },
   },
-  TotalPoints: String
 }, {
   collection: 'UserSchema'
 });

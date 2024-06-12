@@ -18,7 +18,7 @@ export default function SignUp() {
       return;
     }
     // console.log(name, email, password);
-    const singUpData = await fetch(import.meta.env.VITE_SIGNUP_URL, {
+    const singUpData = await fetch("https://dice-game-bhdi.onrender.com/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

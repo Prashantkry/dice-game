@@ -20,7 +20,7 @@ export default function SignInPage() {
 
     // api for sign in
     const signIn = async () => {
-        const sentSignInData = await fetch(import.meta.env.VITE_SIGNIN_URL, {
+        const sentSignInData = await fetch('https://dice-game-bhdi.onrender.com/auth/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -32,7 +32,7 @@ export default function SignInPage() {
         })
         // console.log("sentSignInData -> ", sentSignInData)
         const receivedData = await sentSignInData.json()
-        // console.log("receivedData -> ", receivedData)
+        console.log("receivedData -> ", receivedData)
         setCookie("jwtToken", receivedData.jwtToken)
         if (receivedData.message === "Sign In Successful") {
             // localStorage.setItem("user", JSON.stringify(receivedData.userOtherData))
